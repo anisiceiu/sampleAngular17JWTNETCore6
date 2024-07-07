@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark pointer">
+  <a class="navbar-brand" href="#">Product Application</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="javascript:void(0)" routerLink="/">Home</a>
+      </li>
+      <li *ngIf="isUserAuthenticated()" class="nav-item active">
+        <a class="nav-link" href="javascript:void(0)" routerLink="/products">Products</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logOut()">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+    <div>
+      <div class="alert alert-success" style="text-align: center;"><b>Product List</b></div>
+      <button class="btn btn-primary pull-right" routerLink="/product" >Add Product</button>
+      <hr/>
+      <div class="table-responsive" style="text-align: center;">
+        <table class="table table-striped">
+          <thead>
+          <tr class="pointer">
+            <th scope="col" (click)="sortProducts('id')">ID<span *ngIf="sortBy=='id'">▼</span></th>
+            <th scope="col" (click)="sortProducts('name')">Product Name<span *ngIf="sortBy=='name'">▼</span></th>
+            <th scope="col" (click)="sortProducts('description')">Description<span *ngIf="sortBy=='description'">▼</span></th>
+            <th scope="col" (click)="sortProducts('price')">Price<span *ngIf="sortBy=='price'">▼</span></th>
+            <th scope="col" (click)="sortProducts('quantity')">Quantity<span *ngIf="sortBy=='quantity'">▼</span></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let prd of displayedProducts; index as i">
+            <th scope="row">{{prd.id}}</th>
+            <td>{{prd.name}}</td>
+            <td>{{prd.description}}</td>
+            <td>{{prd.price}}</td>
+            <td>{{prd.quantity}}</td>
+            <td>
+              <button type="button" class="btn btn-sm btn-success"  (click)='ProductDetailsToEdit(prd.id)'>Edit</button>
+              |
+              <button type="button" class="btn btn-sm btn-danger"  (click)="DeleteProduct(prd)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+        </table>
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" (click)="previousPage()" href="javascript:void(0)">Previous</a></li>
+            <li *ngFor="let page of [].constructor(totalPages); let i = index" 
+            (click)="goToPage(i)"
+            [class.active]="i === pageIndex" class="page-item"><a class="page-link" href="javascript:void(0)"> {{ i + 1 }}</a>
+             </li>
+            <li class="page-item"><a class="page-link" (click)="nextPage()" href="javascript:void(0)">Next</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    
+  
